@@ -25,17 +25,17 @@ from rest_framework import generics, status
 #     serializer_class = CategorySerializer
 
 class CategoryListView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self,request,format=None):
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
 
 class CategoryCreateView(APIView):
-    permission_classes = (IsAuthenticated,)
-
+    permission_classes = [IsAuthenticated]
     def post(self,request,format=None):
         data = request.data
-        data['created_by'] = request.user
+        data['created_by'] = request.user.pk
         serializer = CategorySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
