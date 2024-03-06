@@ -14,8 +14,8 @@ class UserRegistrationView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.create(serializer.data)
-            return Response({"status": "sucess", "code": status.HTTP_201_CREATED, "details": serializer.data})
-        return Response({"status": "unsuccessful", "code": status.HTTP_400_BAD_REQUEST, "detsils": serializer.errors})
+            return Response({"status": "success", "code": status.HTTP_201_CREATED, "details": serializer.data})
+        return Response({"status": "unsuccessful", "code": status.HTTP_400_BAD_REQUEST, "details": serializer.errors})
 
 
 class UserLoginView(APIView):
@@ -28,3 +28,4 @@ class UserLoginView(APIView):
             return Response({'token': token.key})
         else:
             return Response({'error': 'Invalid credentials'}, status=401)
+
