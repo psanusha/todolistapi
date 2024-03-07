@@ -42,6 +42,7 @@ class CategoryDetailsView(APIView):
 class CategoryUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
+
     def get_object(self, pk):
         try:
             return Category.objects.get(pk=pk)
@@ -54,5 +55,19 @@ class CategoryUpdateView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response({'message': 'error', 'error': serializer.errors})
+
+
+class CategoryDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+    http_method_names = ['get','delete']
+    def get_object(self, pk):
+        try:
+            return Category.objects.get(pk=pk)
+        except:
+            raise Http404
+    def delete(self, request, pk, format=None):
+        categoryData = self.get_object(pk)
+        categoryData.delete()
+        return Response({'message': 'success,User deleted'})
 
 
