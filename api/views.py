@@ -1,3 +1,4 @@
+from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -5,24 +6,6 @@ from rest_framework.views import APIView
 from api.models import Category
 from api.serializer import CategorySerializer
 from rest_framework import generics, status
-
-
-# Create your views here.
-# class Category(generics.ListAPIView):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
-#
-# class CategoryUpdate(generics.RetrieveUpdateAPIView):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
-#
-# class CategoryCreate(generics.CreateAPIView):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
-#
-# class CategoryDelete(generics.DestroyAPIView):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
 
 class CategoryListView(APIView):
     permission_classes = [IsAuthenticated]
@@ -43,11 +26,33 @@ class CategoryCreateView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST )
 
+class CategoryDetailsView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get_object(self,pk):
+        try:
+            return Category.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def get(self, request,pk,format=None):
+        categoryData = self.get_object(pk)
+        serializer = CategorySerializer(categoryData)
+        return Response(serializer.data, status= status.HTTP_200_OK)
+
 class CategoryUpdateView(APIView):
-    def put(self,request,format=None):
-        serializer = CategorySerializer(data=request.data)
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, pk):
+        try:
+            return Category.objects.get(pk=pk)
+        except:
+            raise Http404
+    def put(self,request,pk,format=None):
+        categoryData = self.get_object(pk)
+        serializer = CategorySerializer(categoryData, data=request.data)
         if serializer.is_valid():
-            category = serializer.save()
-            return Response(serializer.data, status= status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
+            return Response(serializer.data)
+        return Response({'message': 'error', 'error': serializer.errors})
+
+
