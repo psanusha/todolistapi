@@ -32,7 +32,7 @@ python manage.py runserver
 
 
 ### ToDo List
-#### Category
+### Category
 #### 1. To list 
 ##### url
 ```angular2html
@@ -148,7 +148,7 @@ Authorization : Token <token>
     "message": "success,Category deleted"
 }
 ```
-#### Task
+### Task
 #### 1. To list 
 ##### url
 ```angular2html
@@ -184,9 +184,6 @@ http://127.0.0.1:8000/taskcreate/
 ##### Sample Input
 ```angular2html
 Authorization : Token <token>
-```
-```angular2html
-
 ```
 ```angular2html
 {
