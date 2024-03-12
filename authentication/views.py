@@ -8,8 +8,10 @@ from django.contrib.auth import authenticate
 from rest_framework.response import Response
 
 
+
 # Create your views here.
 class UserRegistrationView(APIView):
+    permission_classes = (permissions.AllowAny,)
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -19,6 +21,7 @@ class UserRegistrationView(APIView):
 
 
 class UserLoginView(APIView):
+    permission_classes = (permissions.AllowAny,)
     def post(self, request):
         print(request.data)
         user = authenticate(username=request.data['username'], password=request.data['password'])

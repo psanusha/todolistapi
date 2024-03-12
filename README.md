@@ -2,8 +2,7 @@
 ## The Todo_List Django Web App offers the following features:
 * User Authentication
 * ToDo List
-
-
+<br/>
 ## How to run the Project
 #### Create a virtual environment
 ```angular2html
@@ -29,7 +28,7 @@ python manage.py runserver
 ## How to access each API, with examples and sample response
 
 ### User Authentication
-
+<br/>
 
 ### ToDo List
 ### Category
@@ -148,6 +147,8 @@ Authorization : Token <token>
     "message": "success,Category deleted"
 }
 ```
+<br/>
+
 ### Task
 #### 1. To list 
 ##### url
