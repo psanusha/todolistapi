@@ -28,6 +28,49 @@ python manage.py runserver
 ## How to access each API, with examples and sample response
 
 ### User Authentication
+#### Register
+##### url
+```angular2html
+ http://127.0.0.1:8000/api/auth/register
+```
+##### Sample Input
+```angular2html
+{   "username":"Nirmal",
+    "email":"nirmal@gmail.com",
+    "password":"12345"
+}
+```
+##### Sample Output
+```angular2html
+{
+    "status": "success",
+    "code": 201,
+    "details": {
+        "username": "Nirmal",
+        "email": "nirmal@gmail.com",
+        "password": "12345"
+    }
+}
+```
+
+#### Login
+##### url
+```angular2html
+ http://127.0.0.1:8000/api/auth/login
+```
+##### Sample Input
+```angular2html
+{
+    "username": "Nirmal",
+    "password": "12345"
+}
+```
+##### Sample Output
+```angular2html
+{
+    "token": "52b22533d658d285c506ace40ef5407f67111734"
+}
+```
 <br/>
 
 ### ToDo List
