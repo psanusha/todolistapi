@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import generics, permissions, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from authentication.serializer import UserSerializer
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from rest_framework.response import Response
 
 
@@ -32,3 +33,13 @@ class UserLoginView(APIView):
         else:
             return Response({'error': 'Invalid credentials'}, status=401)
 
+
+class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+            try:
+                # Delete the user's token to logout
+                request.user.auth_token.delete()
+                return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

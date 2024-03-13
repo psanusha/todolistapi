@@ -71,7 +71,21 @@ python manage.py runserver
     "token": "52b22533d658d285c506ace40ef5407f67111734"
 }
 ```
-
+#### LogOut
+##### url
+```angular2html
+ http://127.0.0.1:8000/api/auth/logout
+```
+##### Sample Input
+```angular2html
+Authorization : Token <token>
+```
+##### Sample Output
+```
+{
+    "message": "Successfully logged out."
+}
+```
 
 ### ToDo List
 ### Category
@@ -138,7 +152,7 @@ http://127.0.0.1:8000/categorydetails/<str:pk>/
 Authorization : Token <token>
 ```
 ##### Sample Ouput
-```angular2html
+```
 {
     "id": 2,
     "title": "Study",
