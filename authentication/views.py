@@ -1,13 +1,13 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from rest_framework import generics, permissions, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics, permissions, status, viewsets
+from rest_framework.decorators import permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from authentication.serializer import UserSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, logout
 from rest_framework.response import Response
-
 
 
 # Create your views here.
@@ -43,3 +43,15 @@ class UserLogoutView(APIView):
                 return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
             except Exception as e:
                 return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+##------------------ADMIN SIDE--------------------------##
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes([IsAdminUser])
+
+
